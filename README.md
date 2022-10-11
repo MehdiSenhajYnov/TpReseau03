@@ -70,12 +70,49 @@ Première partie simple, on va avoir besoin de 2 VMs.
 🌞**Générer des requêtes ARP**
 
 - effectuer un `ping` d'une machine à l'autre
+```
+ping 10.3.1.12
+PING 10.3.1.12 (10.3.1.12) 56(84) bytes of data.
+64 bytes from 10.3.1.12: icmp_seq=1 ttl=64 time=0.738 ms
+64 bytes from 10.3.1.12: icmp_seq=2 ttl=64 time=0.673 ms
+64 bytes from 10.3.1.12: icmp_seq=3 ttl=64 time=0.855 ms
+64 bytes from 10.3.1.12: icmp_seq=4 ttl=64 time=0.805 ms
+--- 10.3.1.12 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3007ms
+rtt min/avg/max/mdev = 0.673/0.767/0.855/0.068 ms
+```
 - observer les tables ARP des deux machines
 - repérer l'adresse MAC de `john` dans la table ARP de `marcel` et vice-versa
+
+```
+Adresse MAC de Marcel
+lladdr 08:00:27:e8:1a:1a
+```
+
+```
+Adresse MAC de John
+lladdr 08:00:27:7b:1d:41 
+```
 - prouvez que l'info est correcte (que l'adresse MAC que vous voyez dans la table est bien celle de la machine correspondante)
   - une commande pour voir la MAC de `marcel` dans la table ARP de `john`
   - et une commande pour afficher la MAC de `marcel`, depuis `marcel`
 
+```
+Table Arp de Marcel
+10.3.1.11 dev enp0s8 lladdr 08:00:27:7b:1d:41 STALE
+"ip a" depuis John
+link/ether 08:00:27:7b:1d:41 brd ff:ff:ff:ff:ff:ff
+
+Adresse MAC de John est bien 08:00:27:7b:1d:41
+```
+```
+Table Arp de John
+10.3.1.12 dev enp0s8 lladdr 08:00:27:e8:1a:1a STALE
+"ip a" depuis Marcel
+link/ether 08:00:27:e8:1a:1a brd ff:ff:ff:ff:ff:ff
+
+Adresse MAC de Marcel est bien 08:00:27:e8:1a:1a
+```
 ### 2. Analyse de trames
 
 🌞**Analyse de trames**
